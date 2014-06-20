@@ -2,7 +2,9 @@ package com.oohlalog.logging;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -13,29 +15,31 @@ public class OohLaLogHandler extends Handler {
     LevelConverter levelConverter = new LevelConverter();
 
     static class LevelConverter {
-    	private static Map<Level, OllLevel> map = new HashMap<Level, OllLevel>();
-    	
+    	private static Map<Level, Level> map = new HashMap<Level, Level>();
     	public LevelConverter() {
-    		map.put(Level.ALL,  new OllLevel("ALL", 0));
-     		map.put(Level.FINEST, new OllLevel("TRACE", 1));
-     		map.put(Level.FINER, new OllLevel("TRACE", 1));
-     		map.put(Level.FINE, new OllLevel("DEBUG", 2));
-     		map.put(Level.CONFIG, new OllLevel("DEBUG", 2));
-     		map.put(Level.INFO, new OllLevel("INFO", 3));
-     		map.put(Level.WARNING, new OllLevel("WARN", 4));
-     		map.put(Level.SEVERE,new OllLevel("ERROR", 5));
-     		map.put(Level.OFF,  new OllLevel("OFF", 6));
+    		map.put(Level.ALL,  OllLevel.ALL);
+     		map.put(Level.FINEST, OllLevel.TRACE);
+     		map.put(Level.FINER, OllLevel.TRACE);
+     		map.put(Level.FINE, OllLevel.DEBUG);
+     		map.put(Level.CONFIG, OllLevel.DEBUG);
+     		map.put(Level.INFO, OllLevel.INFO);
+     		map.put(Level.WARNING, OllLevel.WARN);
+     		map.put(Level.SEVERE, OllLevel.ERROR);
+     		map.put(Level.OFF,  OllLevel.OFF);
     	}
     		
-    	public OllLevel translate(Level old) {	
-    		return map.get(old);
+    	public Level translate(Level old) {	
+    		Level ollLevel;
+    		ollLevel = map.get(old);
+    		if (ollLevel != null) return ollLevel;
+    		else if (map.containsValue(old)) return old;
+    		// Default if user gives an invalid log
+    		else return OllLevel.INFO;
+    		
     	}
-    	class OllLevel extends Level {
-        	public OllLevel(String name, int lvl) {
-        		super(name, lvl);
-        	}
+
     }
-}
+
  
     // ----------------------------------------------------
     
