@@ -60,10 +60,10 @@ public class OohLaLogHandler extends Handler {
 	private long statsInterval = 60000; // 1 minute
 	
 	// For configuring the URL
-	private String host = "localhost";
+	private String host = "api.oohlalog.com"; //localhost"
 	private String path = "/api/logging/save.json";
 	private String statsPath = "/api/timeSeries/save.json";
-	private int port = 8196;
+	private int port = 80; //8196
 	
 	private String authToken = null;
 	private String agent = "logging";
