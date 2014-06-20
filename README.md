@@ -8,72 +8,35 @@ This is handler for java.util.logging that sends logs to the Oohlalog Cloud Logg
 ##Usage/Configuration
 
 This is a handler, just like any other you might use for java.util.logging.  The only difference is that this handler takes one required parameter, your OohLaLog
-apiKey.  For a tutorial on how to use java.util.logging, see [here][0].
+apiKey.  For a tutorial on how to use java.util.logging, see [here][0].  For full documentation on the Logging class, see [here][1].  An *important* thing to note is that the logging levels that are native to java.util.logging are not the same ones used by OohLaLog.  
+
+OohLaLog logging levels
+-------------------------
+
+0: ALL   = OllLevel.ALL
+1: TRACE = OllLevel.TRACE
+2: DEBUG = OllLevel.DEBUG
+3: INFO  = OllLevel.INFO
+4: WARN  = OllLevel.WARN
+5: ERROR = OllLevel.ERROR
+6: FATAL = OllLevel.FATAL
+7: OFF   = OllLevel.OFF
+
+For best behavior, we recommend using the static logging levels provided by the OllLevel class.
+
+Here is a small example, for starters.
 ```
-org.apache.commons.logging.Log=com.oohlalog.commons.OohLaLogLogger
-```
+String apiKey = <your apiKey>
+Logger logger = Logger.getLogger(MyExample.class.getName());
+logger.setLevel(OllLevel.INFO);
 
-Additional configuration options are to be placed in an alternative properties file, oohlalog.properties.  
-The only required property to include is your OohLaLog authToken.  
-Similarly to the Commons standard, you have the ability to specify whether you would like to see the full log name, the shortened version of the name, or both.
+OohLaLogHandler handler = new OohLaLogHandler(apiKey);
+logger.addHandler(handler);
 
-You also can specify the minimum loggign level for the logger.  For example, if set to "warn", only messages of equal severity or higher will be logged.
+logger.log(OllLevel.TRACE, "msg1"); // Will not be logged because TRACE is lower severity than the INFO level of the logger
+logger.log(OllLevel.INFO, "msg2");  // Will be logged
 
-Specific to OohLaLog, you have the ability to configure how often logs are uploaded to the OohLaLog server, in addition to having control over which statistics 
-you would like uploaded. 
-
-Below is an example oohlalog.properties file.
-```
-# Must set the authToken.
-com.oohlalog.commons.authToken=1f111a85-62c7-4f42-8dd9-8a10bb80dc6e
-
-# Optional: Show the log name in every message. 
-# Defaults = false.
-com.oohlalog.commons.showLogName=false
-
-# Optional: Show the last component of the name to be output with every message. 
-# Default = true.
-com.oohlalog.commons.showShortName=true
-
-# Optional: Logging level for all instances of OohLaLogLogger.
-# Must be either trace, debug, info, warn, error or fatal. 
-# Default = info.
-com.oohlalog.commons.defaultlog=info
-
-# Optional: Amount of time in milliseconds before an automatic flush of all logs (lower numbers impact app performance)
-# Default = 10000
-com.oohlalog.commons.timeBuffer=10000
-
-# Optional: Amount of time in milliseconds before an automatically posting usage statistics to OohLaLog (lower numbers impact app performance)
-# Default = 60000
-com.oohlalog.commons.statsBuffer=60000
-
-# Optional: Number logs to buffer before posting to OohLaLog (lower numbers impact app performance)
-# Default = 150
-com.oohlalog.commons.maxBuffer=150
-
-# Optional: Do you want Memory Statistics to be posted to OohLaLog
-# Default = true
-com.oohlalog.commons.showMemoryStats=true
-
-# Optional: Do you want CPU Statistics to be posted to OohLaLog
-# Default = true
-com.oohlalog.commons.showCPUStats=true
-
-# Optional: Do you want File System Statistics to be posted to OohLaLog
-# Default = true
-com.oohlalog.commons.showFileSystemStats=true
-
-# Optional: Specifies whether or not you would like to send any usage statistics to OohLaLog.  
-#           This option has greater priority than showMemoryStats, showCPUStats, and showFileSystemStats
-# Default = true
-com.oohlalog.commons.Stats=true
-
-# Optional: Logging detail level for an OohLaLogLogger instance named MyClassLogger.
-# Must be either trace, debug, info, warn, error or fatal. Defaults to the
-# above default if not set.
-com.oohlalog.commons.log.MyClassLogger=warn
-
+handler.close();
 ```
 
 
@@ -86,12 +49,8 @@ To use the OohLaLog Log4J Appender please include the following jars in your cla
 TODO
 ```
 
-###2. Commons Logging JAR
-```
-commons-logging-1.1.3.jar
-```
 
-### 3. GSON Jar
+### 2. GSON Jar
 ```
 gson-2.2.4.jar
 ```
@@ -107,3 +66,5 @@ Maven info:
   <version>2.2.4</version>
 </dependency>
 ```
+[0]:http://www.vogella.com/tutorials/Logging/article.html
+[1]:http://docs.oracle.com/javase/7/docs/api/java/util/logging/package-summary.html
