@@ -17,10 +17,12 @@ public class Test {
 		logger.addHandler(handler);
 		
 		for (int i = 0; i < 50; i++) {
+			logger.log(OllLevel.COUNT, "testing");
 			logger.fine("TRACE:"+i); // Won't get printed because default level is info
 			logger.finer("DEBUG:"+i); // Won't get printed because default level is info
+//			Thread.sleep(20);
 			logger.info("INFO:"+i);
-			Thread.sleep(20);
+//			Thread.sleep(20);
 			logger.warning("WARN:"+i);
 			Thread.sleep(20);
 			logger.severe("ERROR:"+i);

@@ -57,16 +57,16 @@ public class OohLaLogHandler extends Handler {
 	private LogController logController;
 	
     // The time threshold controlling how often uploads of statistics are made to the OLL server
-	private long statsInterval = 60000; // 1 minute
+	private long statsInterval = 5000; // 1 minute
 	
 	// For configuring the URL
-	private String host = "api.oohlalog.com"; //localhost"
+	private String host = "localhost";//"api.oohlalog.com";
 	private String path = "/api/logging/save.json";
 	private String statsPath = "/api/timeSeries/save.json";
-	private int port = 80; //8196
+	private int port = 8196; //8196
 	
 	private String authToken = null;
-	private String agent = "logging";
+	private String agent = "java.util.logging";
 	private boolean secure = false;
 	private boolean debug = true;
 	private String hostName = null;

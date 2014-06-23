@@ -30,9 +30,11 @@ public class LogController {
 
 	/**
 	 * Constructor that creates our LogControl object.
-	 * @param handler
-	 * @param threshold
-	 * @param timeBuffer
+	 * 
+	 * @param handler the OohLaLogHandler object
+	 * @param threshold the number of logs to be held in the buffer before flushing
+	 * @param timeBuffer the maximum amount of time between buffer flushes
+	 * @param statsInterval the amount of time between the flushing of statistics to OohLaLog
 	 */
 	public LogController(OohLaLogHandler handler, int threshold, long timeBuffer, long statsInterval) {
 		this.handler = handler;
@@ -76,7 +78,7 @@ public class LogController {
 					if ( (buffer.size() >= threshold) && !flushing.get() && 
 							(System.currentTimeMillis() - lastFailedFlush > failedFlushWait) ) {
 						if (handler.getDebug()) System.out.println( ">>>Above Threshold" );
-						flush(threshold);		
+						flush(threshold);	
 					}
 				}
 			}
@@ -159,10 +161,12 @@ public class LogController {
 
 	/**
 	 * Flush at most amtToFlush items from the deque.
+	 * 
+	 * @param amtToFlush the maximum number of logs to flush
 	 */
 	protected void flush(final int amtToFlush ) {
 		final OohLaLogHandler handler = this.handler;
-		if (handler.getDebug()) System.out.println( ">>>>>>Flushing Deque Completely" );
+		if (handler.getDebug()) System.out.println( ">>>>>>Flushing #items = " + ((amtToFlush == Integer.MAX_VALUE) ? "all"  : amtToFlush));
 		flushing.set( true );
 		Thread t = new Thread( new Runnable() {
 			public void run() {
@@ -183,10 +187,13 @@ public class LogController {
 	}
 
 	
+	/**
+	 * Closes all resources used by the executor service.
+	 */
 	protected void close() {
-
-		flush(Integer.MAX_VALUE);
+		if(handler.getDebug()) System.out.println(">>>Shutting Down");
 		shutdown = true;
-		executorService.shutdown();
+		flush(Integer.MAX_VALUE);
+		executorService.shutdownNow();
 	}
 }

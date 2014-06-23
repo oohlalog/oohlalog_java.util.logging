@@ -27,7 +27,7 @@ public class Payload {
 	private String host = null;
 	private String hostName = null;
 	private String path = null;
-	private String agent = null;
+	private String agent = "java.util.logging";
 	private int port;
 	private boolean secure = false;
 	private boolean debug = true;
@@ -45,7 +45,7 @@ public class Payload {
 
 	/**
 	 * Serialize payload into a transferrable dataformat (json)
-	 * @return
+	 * @return a JSON version of the payload
 	 */
 	public String serialize( ) {
 		Payload pl = this;
@@ -71,7 +71,7 @@ public class Payload {
 
 	/**
 	 * Transform a logging event into a map for serialization
-	 * @param le
+	 * @param log the log record to be transformed
 	 * @return
 	 */
 	private static Map<String,Object> transform( LogRecord log ) {
@@ -80,7 +80,6 @@ public class Payload {
 		map.put( "level", log.getLevel().toString() );
 		map.put( "message", log.getMessage() );
 		map.put( "timestamp", log.getMillis());
-//		map.put( "hostname", log.getHostName());
 //		map.put("category", log.getCategory() ); // allow for an explicit category
 		map.put( "details", log.getParameters());
 		
@@ -89,7 +88,7 @@ public class Payload {
 
 	/**
 	 * Write this payload to remote service
-	 * @param pl
+	 * @param pl the payload
 	 * @throws RuntimeException
 	 */
 	public static boolean send( Payload pl ) throws RuntimeException {
@@ -259,7 +258,7 @@ public class Payload {
 		private String host = null;
 		private String hostName = null;
 		private String path = null;
-		private String agent = "log4j";
+		private String agent = "java.util.logging";
 		private int port = 80;
 		private boolean secure = false;
 		private boolean debug = false;

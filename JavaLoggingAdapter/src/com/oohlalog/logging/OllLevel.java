@@ -15,7 +15,6 @@ public class OllLevel extends Level {
 	
 	static {
 		ALL = new OllLevel("ALL", 0);
-		COUNT = new OllLevel("COUNT", 0);
 		TRACE = new OllLevel("TRACE", 1);
 		DEBUG = new OllLevel("DEBUG", 2);
 		INFO = new OllLevel("INFO", 3);
@@ -23,6 +22,7 @@ public class OllLevel extends Level {
 		ERROR = new OllLevel("ERROR", 5);
 		FATAL = new OllLevel("FATAL", 6);
 		OFF = new OllLevel("OFF", 7);
+		COUNT = new OllLevel("COUNT", 8);
 	}
 	
 	public OllLevel(String name, int value) {
