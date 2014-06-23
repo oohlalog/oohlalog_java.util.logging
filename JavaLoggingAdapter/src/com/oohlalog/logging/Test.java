@@ -18,16 +18,15 @@ public class Test {
 		
 		for (int i = 0; i < 50; i++) {
 			logger.log(OllLevel.COUNT, "testing");
-			logger.fine("TRACE:"+i); // Won't get printed because default level is info
-			logger.finer("DEBUG:"+i); // Won't get printed because default level is info
-//			Thread.sleep(20);
+			logger.fine("TRACE:"+i); 
+			logger.finer("DEBUG:"+i);
+			Thread.sleep(20);
 			logger.info("INFO:"+i);
-//			Thread.sleep(20);
+			Thread.sleep(20);
 			logger.warning("WARN:"+i);
 			Thread.sleep(20);
 			logger.severe("ERROR:"+i);
-			Thread.sleep(20);
-			
+			Thread.sleep(20);			
 		}
 //		Level lvl = new CountLevel("test", 11);
 //		for (int i = 50; i < 100; i++) {
