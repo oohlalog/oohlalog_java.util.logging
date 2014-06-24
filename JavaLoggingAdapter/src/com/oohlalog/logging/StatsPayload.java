@@ -26,6 +26,7 @@ public class StatsPayload {
 
 	private Map<String, Object> counters = null;
 
+	
 	/**
 	 * lock constructor to require usage of the builder
 	 */
@@ -209,7 +210,7 @@ public class StatsPayload {
 		private String host = null;
 		private String hostName = null;
 		private String path = null;
-		private String agent = "log4j";
+		private String agent = "java.util.logging";
 		private int port = 80;
 		private boolean secure = false;
 		private boolean debug = false;

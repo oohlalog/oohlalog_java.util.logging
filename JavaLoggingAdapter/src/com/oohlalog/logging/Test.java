@@ -20,7 +20,7 @@ public class Test {
 		map.put("timeBuffer", 10000);
 		map.put("statsInterval", 60000);
 		map.put("secure", false);
-		map.put("debug", "false");
+		map.put("debug", false);
 		
 		OohLaLogHandler handler = new OohLaLogHandler(apiKey, map);
 		logger.addHandler(handler);

@@ -138,7 +138,7 @@ public class LogController {
 						.authToken(handler.getAuthToken())
 						.host(handler.getHost())
 						.agent(handler.getAgent())
-						.path(handler.getPath())
+						.path(handler.getStatsPath())
 						.port(handler.getPort())
 						.secure(handler.getSecure())
 						.debug(handler.getDebug())

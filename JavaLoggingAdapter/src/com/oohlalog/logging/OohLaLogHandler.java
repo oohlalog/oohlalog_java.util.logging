@@ -57,10 +57,10 @@ public class OohLaLogHandler extends Handler {
 	private long statsInterval = 60000; // 1 minute
 
 	// For configuring the URL
-	private String host = "localhost"; //api.oohlalog.com"; // localhost
+	private String host = "api.oohlalog.com"; // localhost
 	private String path = "/api/logging/save.json";
 	private String statsPath = "/api/timeSeries/save.json";
-	private int port = 8196; //80; //8196
+	private int port = 80; //8196
 
 	private String authToken = null;
 	private String agent = "java.util.logging";
@@ -176,13 +176,11 @@ public class OohLaLogHandler extends Handler {
 
 		logRecordBuffer.addLogToBuffer(record);
 		// Don't need to have the flushTimer going when there are no log entries in the deque. 
-		// Instead, we start the timer after adding an element which increasing deque size 
-		// from 0 to 1
 		if (getLogRecordBuffer().size() == 1)
 			this.logController.startFlushTimer();
 	}
 
-	
+
 	@Override
 	public void flush() {
 		logController.flush(Integer.MAX_VALUE);
@@ -197,65 +195,49 @@ public class OohLaLogHandler extends Handler {
 //-----------------------------------------------------------------------------------------		
 	
 	/**
-	 * Getter method for returning the max buffer size belonging to this OohLaLogLogger instance.
-	 */
-	public int getMaxBuffer() {
-		return maxBuffer;
-	}
-
-
-	/**
 	 * Getter method for returning the LogRecordBuffer belonging to this OohLaLogLogger instance.
 	 */
 	protected LogRecordBuffer getLogRecordBuffer() {
 		return logRecordBuffer;
 	}
-
-
+	
+	
 	/**
 	 * Getter method for returning the host portion of the URL used for connecting to OohLaLog.
 	 */
-	public String getHost() {
+	protected String getHost() {
 		return host;
-	}
-
-
-	/**
-	 * Getter method for returning the host name belonging to this OohLaLogLogger instance.
-	 */
-	public String getHostName() {
-		return hostName;
 	}
 
 
 	/**
 	 * Getter method for returning the path portion of the URL used for connecting to OohLaLog.
 	 */
-	public String getPath() {
+	protected String getPath() {
 		return path;
 	}
 
+	
+	/**
+	 * Getter method for returning the stats path portion of the URL for connecting to OohLaLog.
+	 */
+	protected String getStatsPath() {
+		return statsPath;
+	}
 
+	
 	/**
 	 * Getter method for returning the base logging framework used.
 	 */
-	public String getAgent() {
+	protected String getAgent() {
 		return agent;
-	}
-
-
-	/**
-	 * Getter method for returning the stats path portion of the URL used for connecting to OohLaLog.
-	 */
-	public String getStatsPath() {
-		return statsPath;
 	}
 
 
 	/**
 	 * Getter method for returning the port portion of the URL used for connecting to OohLaLog.
 	 */
-	public int getPort() {
+	protected int getPort() {
 		return port;
 	}
 
@@ -264,18 +246,8 @@ public class OohLaLogHandler extends Handler {
 	 * Getter method for returning the authToken used by this instance of OohLaLogLogger
 	 * for connecting to an OohLaLog project. 
 	 */
-	public String getAuthToken() {
+	protected String getAuthToken() {
 		return authToken;
-	}
-
-
-	/**
-	 * Getter method for returning the timeBuffer used by this instance of OohLaLogLogger. 
-	 * TimeBuffer is the amount of time the logger will wait before issuing requests to
-	 * the OohLaLog server.
-	 */
-	public long getTimeBuffer() {
-		return timeBuffer;
 	}
 
 
@@ -283,7 +255,7 @@ public class OohLaLogHandler extends Handler {
 	 * Getter method for returning whether or not the connection to the OohLaLog server
 	 * is secure.
 	 */
-	public boolean getSecure() {
+	protected boolean getSecure() {
 		return secure;
 	}
 
@@ -292,7 +264,7 @@ public class OohLaLogHandler extends Handler {
 	 * Getter method for returning whether or not the logger is in debug mode.  Debug mode
 	 * will cause many debug messages to be printed to StdOut.
 	 */
-	public boolean getDebug() {
+	protected boolean getDebug() {
 		return debug;
 	}
 
@@ -301,17 +273,8 @@ public class OohLaLogHandler extends Handler {
 	 * Getter method for returning a boolean indicating whether or not logging stats 
 	 * associated with this instance of OohLaLogLogger will be sent to the OohLaLog server.
 	 */
-	public boolean getShowStats() {
+	protected boolean getShowStats() {
 		return showStats;
-	}
-
-
-	/**
-	 * Getter method for returning a long representing the time in milliseconds this instance of 
-	 * OohLaLogLogger will wait before sending stats to the OohLaLog server.
-	 */
-	public long getstatsInterval() {
-		return statsInterval;
 	}
 
 
@@ -319,7 +282,7 @@ public class OohLaLogHandler extends Handler {
 	 * Getter method for returning a boolean indicating whether or not memory stats 
 	 * associated with this instance of OohLaLogLogger will be sent to the OohLaLog server.
 	 */
-	public boolean getShowMemoryStats() {
+	protected boolean getShowMemoryStats() {
 		return showMemoryStats;
 	}
 
@@ -328,7 +291,7 @@ public class OohLaLogHandler extends Handler {
 	 * Getter method for returning a boolean indicating whether or not cpu stats 
 	 * associated with this instance of OohLaLogLogger will be sent to the OohLaLog server.
 	 */
-	public boolean getShowCPUStats() {
+	protected boolean getShowCPUStats() {
 		return showCPUStats;
 	}
 
@@ -337,77 +300,7 @@ public class OohLaLogHandler extends Handler {
 	 * Getter method for returning a boolean indicating whether or not file system stats 
 	 * associated with this instance of OohLaLogLogger will be sent to the OohLaLog server.
 	 */
-	public boolean getShowFileSystemStats() {
+	protected boolean getShowFileSystemStats() {
 		return showFileSystemStats;
 	}
-
-
-	/**
-	 * Setter method for setting a boolean indicating whether or not file system stats 
-	 * associated with this instance of OohLaLogLogger will be sent to the OohLaLog server.
-	 */
-	public void setShowFileSystemStats(boolean showFileSystemStats) {
-		this.showFileSystemStats = showFileSystemStats;
-	}
-	
-//	/**
-//	 * Setter method for setting the host name belonging to this OohLaLogLogger instance.
-//	 */
-//	public void setHostName(String hostName) {
-//		this.hostName = hostName;
-//	}
-	
-	
-//	/**
-//	 * Setter method for setting a boolean indicating whether or not cpu stats 
-//	 * associated with this instance of OohLaLogLogger will be sent to the OohLaLog server.
-//	 */
-//	public void setShowCPUStats(boolean showCPUStats) {
-//		this.showCPUStats = showCPUStats;
-//	}
-
-
-//	/**
-//	 * Setter method for setting a boolean indicating whether or not memory stats 
-//	 * associated with this instance of OohLaLogLogger will be sent to the OohLaLog server.
-//	 */
-//	public void setShowMemoryStats(boolean showMemoryStats) {
-//		this.showMemoryStats = showMemoryStats;
-//	}	
-
-
-//	/**
-//	 * Setter method for setting a long representing the time in milliseconds this instance of 
-//	 * OohLaLogLogger will wait before sending stats to the OohLaLog server.
-//	 */
-//	public void setstatsInterval(long statsInterval) {
-//		this.statsInterval = statsInterval;
-//	}
-	
-	
-//	/**
-//	 * Setter method for setting a boolean indicating whether or not logging stats 
-//	 * associated with this instance of OohLaLogLogger will be sent to the OohLaLog server.
-//	 */
-//	public void setShowStats(boolean showStats) {
-//		this.showStats = showStats;
-//	}
-	
-
-//	/**
-//	 * Setter method for setting whether or not the logger is in debug mode.  Debug mode
-//	 * will cause many debug messages to be printed to StdOut.
-//	 */
-//	public void setDebug(boolean debug) {
-//		this.debug = debug;
-//	}
-	
-
-//	/**
-//	 * Setter method for setting whether or not the connection to the OohLaLog server
-//	 * is secure.
-//	 */
-//	public void setSecure(boolean secure) {
-//		this.secure = secure;
-//	}
 }

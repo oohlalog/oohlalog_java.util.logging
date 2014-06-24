@@ -2,6 +2,7 @@ package com.oohlalog.logging;
 
 import java.util.logging.Level;
 
+@SuppressWarnings("serial")
 public class OllLevel extends Level {
 	public static Level ALL;
 	public static Level COUNT;

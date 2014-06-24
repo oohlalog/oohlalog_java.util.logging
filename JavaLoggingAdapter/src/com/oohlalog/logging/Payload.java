@@ -134,11 +134,9 @@ public class Payload {
 			if (con.getResponseCode() != 200) {
 				success = false;
 			}
-		}
-		catch ( Throwable t ) {
+		} catch ( Throwable t ) {
 			t.printStackTrace();
-		}
-		finally {
+		} finally {
 			if ( os != null ) {
 				try {
 				  con.disconnect();
@@ -152,7 +150,6 @@ public class Payload {
 			}
 		}
 		return success;
-
 	}
 
 	public String getAuthToken() {
