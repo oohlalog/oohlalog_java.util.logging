@@ -42,6 +42,38 @@ handler.close();
 ```
 *IMPORTANT:* When finished using the OohLaLogHandler, make sure to call the .close() method on the OohLaLogHandler to release the resources that it uses.
 
+Additionally, an OohLaLogHandler can take a set of configuration options as a Map parameter.  These options include:
+
+| parameter     | type           | Description                                                              | 
+| ------------  | -------------- | ----------------                                                         | 
+| threshold     | int            | number of logs to buffer before automatically flushing                   |
+| maxBuffer     | int            | maximum amount of time to wait between flushes to the the OohLaLog server| 
+| statsInterval | long           | the amount of time to wait between sending usage statistics to OohLaLog  | 
+| secure        | boolean        |whether or not to use a secure, https connection to the OohLaLog server   | 
+| debug         | boolean        |whether or not you want to see debug output                               |
+
+A complete usage example is below
+```
+String apiKey = <your apiKey>
+Logger logger = Logger.getLogger(MyExample.class.getName());
+logger.setLevel(OllLevel.INFO);
+
+Map<String, Object> settings = new HashMap<String, Object>();
+		map.put("threshold", 100);
+		map.put("maxBuffer", 1000);
+		map.put("timeBuffer", 10000);
+		map.put("statsInterval", 60000);
+		map.put("secure", false);
+		map.put("debug", false);
+
+OohLaLogHandler handler = new OohLaLogHandler(apiKey, settings);
+logger.addHandler(handler);
+
+logger.log(OllLevel.TRACE, "msg1"); // Will not be logged because TRACE is lower severity than the INFO level of the logger
+logger.log(OllLevel.INFO, "msg2");  // Will be logged
+
+handler.close();
+```
 ##Dependencies
 
 To use the OohLaLogHandler please include the following jars in your classpath:
