@@ -1,6 +1,7 @@
 package com.oohlalog.logging;
 
-import java.util.logging.Level;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 
@@ -13,7 +14,15 @@ public class Test {
 		System.out.println(logger.getLevel());
 		
 		System.out.println("---Beginning---");
-		OohLaLogHandler handler = new OohLaLogHandler(apiKey);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("threshold", 100);
+		map.put("maxBuffer", 1000);
+		map.put("timeBuffer", 10000);
+		map.put("statsInterval", 60000);
+		map.put("secure", false);
+		map.put("debug", "false");
+		
+		OohLaLogHandler handler = new OohLaLogHandler(apiKey, map);
 		logger.addHandler(handler);
 		
 		for (int i = 0; i < 50; i++) {
